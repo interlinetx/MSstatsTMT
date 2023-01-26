@@ -136,9 +136,10 @@ MSstatsPrepareForSummarizationTMT = function(
   input = data.table::as.data.table(unclass(data))
   if (!is_validated) {
     data.table::setnames(input, "Charge", "PrecursorCharge")
+    use_fractions = "Fraction" %in% colnames(input)
     input = MSstatsConvert::MSstatsBalancedDesign(
       input, c("PeptideSequence", "PrecursorCharge"),
-      TRUE, FALSE, "zero_to_na"
+      TRUE, use_fractions, "zero_to_na"
     )
     input = data.table::as.data.table(unclass(input))
     data.table::setnames(input, "PrecursorCharge", "Charge")
